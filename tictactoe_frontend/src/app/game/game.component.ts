@@ -57,9 +57,12 @@ export class GameComponent {
 
   status = computed(() => this.game.getStatus());
 
-  // Accessibility labels
+  // PUBLIC_INTERFACE
+  /** Returns an ARIA label for each cell, explicitly naming the piece for accessibility. */
   cellLabel(index: number): string {
     const v = this.game.state().board[index];
-    return `Cell ${index + 1}, ${v ? v : 'empty'}`;
+    if (v === 'X') return `Cell ${index + 1}, X (Knight)`;
+    if (v === 'O') return `Cell ${index + 1}, O (Queen)`;
+    return `Cell ${index + 1}, empty`;
   }
 }

@@ -19,36 +19,47 @@ describe('GameComponent', () => {
   });
 
   it('should render 9 cells', () => {
-    const el: HTMLElement = fixture.nativeElement;
+    const el = fixture.nativeElement as HTMLElement;
     const cells = el.querySelectorAll('.cell');
     expect(cells.length).toBe(9);
   });
 
-  it('clicking a cell should update UI', () => {
-    const el: HTMLElement = fixture.nativeElement;
-    const firstCell = el.querySelectorAll('.cell')[0] as unknown as { click: () => void; textContent: string | null };
+  it('clicking a cell should render an icon (knight or queen) instead of raw text', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    const firstCell: any = el.querySelectorAll('.cell')[0];
     firstCell.click();
     fixture.detectChanges();
-    expect(firstCell.textContent?.trim()).toMatch(/X|O/); // depends on AI timing/mode but should fill
+
+    // Expect an SVG to be present inside the clicked cell
+    const svg = firstCell.querySelector('svg');
+    expect(svg).toBeTruthy();
+
+    // And either X (Knight) or O (Queen) class applied on icon wrapper
+    const hasKnight = !!firstCell.querySelector('.cell-x');
+    const hasQueen = !!firstCell.querySelector('.cell-o');
+    expect(hasKnight || hasQueen).toBeTrue();
   });
 
   it('should toggle audit panel', () => {
-    const el: HTMLElement = fixture.nativeElement;
-    const toggle = el.querySelector('.btn.ghost:nth-child(3)') as unknown as { click: () => void };
+    const el = fixture.nativeElement as HTMLElement;
+    const toggle: any = el.querySelector('.btn.ghost:nth-child(3)');
     toggle.click();
     fixture.detectChanges();
     expect(el.querySelector('#audit-panel')).toBeTruthy();
   });
 
-  it('reset button should clear board content', () => {
-    const el: HTMLElement = fixture.nativeElement;
-    const firstCell = el.querySelectorAll('.cell')[0] as unknown as { click: () => void; textContent: string | null };
+  it('reset button should clear board content (no icons present)', () => {
+    const el = fixture.nativeElement as HTMLElement;
+    const firstCell: any = el.querySelectorAll('.cell')[0];
     firstCell.click();
     fixture.detectChanges();
-    const reset = el.querySelector('.btn.primary') as unknown as { click: () => void };
+
+    const reset: any = el.querySelector('.btn.primary');
     reset.click();
     fixture.detectChanges();
-    const firstCellAfter = el.querySelectorAll('.cell')[0] as unknown as { textContent: string | null };
-    expect(firstCellAfter.textContent?.trim()).toBe('');
+
+    const firstCellAfter: any = el.querySelectorAll('.cell')[0];
+    expect(firstCellAfter.querySelector('svg')).toBeFalsy();
+    expect(firstCellAfter.querySelector('.cell-x, .cell-o')).toBeFalsy();
   });
 });

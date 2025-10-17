@@ -17,5 +17,6 @@ html, body {
   height: 100%;
   background-color: var(--color-bg);
   color: var(--color-text);
+  /* Font stack includes common system sans with good SVG/Unicode rendering support */
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
