@@ -1,0 +1,60 @@
+<section class="board-wrapper">
+  <div class="board"
+       role="grid"
+       aria-label="Tic Tac Toe Board">
+    <button
+      *ngFor="let cell of game.state().board; let i = index"
+      class="cell"
+      [class.filled]="!!cell"
+      [attr.aria-label]="cellLabel(i)"
+      role="gridcell"
+      [disabled]="!!cell || game.state().isGameOver"
+      (click)="onCellClick(i)">
+      <span [class.cell-x]="cell === 'X'" [class.cell-o]="cell === 'O'">{{ cell || '' }}</span>
+    </button>
+  </div>
+
+  <div class="controls">
+    <div class="status" [attr.aria-live]="'polite'">{{ status() }}</div>
+    <div class="buttons">
+      <button class="btn primary"
+              (click)="reset()"
+              aria-label="Reset game">
+        Reset
+      </button>
+      <button class="btn ghost"
+              (click)="toggleMode()"
+              aria-label="Toggle game mode">
+        Mode: {{ game.state().mode }}
+      </button>
+      <button class="btn ghost"
+              (click)="showAudit.set(!showAudit())"
+              aria-controls="audit-panel"
+              [attr.aria-expanded]="showAudit()">
+        {{ showAudit() ? 'Hide' : 'Show' }} Audit Log
+      </button>
+    </div>
+  </div>
+
+  <div class="audit" id="audit-panel" *ngIf="showAudit()">
+    <div class="audit-header">
+      <h3>Audit Trail (client-side)</h3>
+      <button class="btn danger" (click)="game.clearAudit()" aria-label="Clear audit">Clear</button>
+    </div>
+    <ul class="audit-list">
+      <li *ngFor="let rec of game.auditLog(); let idx = index" class="audit-item">
+        <div class="row-1">
+          <span class="pill" [class.warn]="rec.level==='WARN'" [class.error]="rec.level==='ERROR'">{{ rec.level || 'INFO' }}</span>
+          <span class="meta">{{ rec.timestampISO }}</span>
+          <span class="meta">user: {{ rec.userId || 'unknown' }}</span>
+          <span class="meta action">{{ rec.action }} {{ rec.entity }}</span>
+        </div>
+        <details>
+          <summary>Details</summary>
+          <pre class="payload">{{ rec | json }}</pre>
+        </details>
+      </li>
+    </ul>
+    <p class="footnote">Note: This audit is ephemeral in memory. Future: persist with backend, bind e-signature, implement RBAC.</p>
+  </div>
+</section>

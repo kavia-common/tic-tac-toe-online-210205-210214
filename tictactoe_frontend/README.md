@@ -1,59 +1,32 @@
-# Angular
+# Tic Tac Toe Frontend (Angular)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.1.
+Ocean Professional themed Tic Tac Toe UI with Player vs Player and Player vs Computer modes, client-side audit-style logs, validation, and unit tests.
 
-## Development server
+Features:
+- Centered responsive 3x3 board with accessible semantics (role="grid" / "gridcell")
+- PvP and PvC (AI heuristic: win/block/center/corner/side)
+- Input validation and error handling (cannot override non-empty cells)
+- Client-side audit trail with ISO timestamps, in-memory and viewable in collapsible panel
+- Ocean Professional theme (blue primary, amber accents, subtle shadows and gradients)
+- Unit tests (Jasmine/Karma) targeting >80% coverage for core parts
 
-To start a local development server, run:
+Getting started:
+- npm install
+- npm start
+- Visit http://localhost:3000
 
-```bash
-ng serve
-```
+Testing:
+- npm test
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Structure:
+- src/app/models/tic-tac-toe.types.ts: shared types and AuditRecord
+- src/app/services/game.service.ts: state management, validation, audit, AI integration
+- src/app/services/ai.service.ts: simple deterministic AI selector
+- src/app/game/game.component.*: main UI
+- src/app/app.component.*: application shell
+- src/app/services/*.spec.ts and src/app/game/*.spec.ts: unit tests
 
-## Code scaffolding
+Compliance notes (frontend-only):
+- Best-effort client-side audit trail included; e-signature and RBAC placeholders for future backend integration.
+- No external services or environment variables required.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

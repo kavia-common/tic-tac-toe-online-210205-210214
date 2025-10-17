@@ -1,18 +1,13 @@
-/* Global styles for minimalistic design */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 :root {
   --color-primary: #2563EB;
   --color-secondary: #F59E0B;
   --color-error: #EF4444;
   --color-bg: #f9fafb;
+  --color-surface: #ffffff;
   --color-text: #111827;
 }
 
+* { box-sizing: border-box; }
 html, body {
   height: 100%;
   background-color: var(--color-bg);
