@@ -1,0 +1,4 @@
+{
+    "command": "npm install --legacy-peer-deps && npm run build",
+    "working_directory": "/home/kavia/workspace/code-generation/tic-tac-toe-online-210205-210214/tictactoe_frontend"
+}
